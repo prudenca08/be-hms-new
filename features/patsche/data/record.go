@@ -15,6 +15,7 @@ type Patsche struct {
 	Time      string
 	CreatedAt time.Time
 	UpdatedAt time.Time
+	
 }
 
 func toDomain(ds Patsche) patsche.Domain {

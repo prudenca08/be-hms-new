@@ -22,6 +22,7 @@ type Service interface {
 	Update(admID int, patID int, domain *Domain) (Domain, error)
 	Delete(patID, id int) (string, error)
 	PatientByID(id int) (Domain, error)
+	
 }
 
 type Repository interface {

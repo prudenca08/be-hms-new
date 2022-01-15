@@ -2,6 +2,7 @@ package data
 
 import (
 	"finalproject/features/patientses"
+	"time"
 
 	"gorm.io/gorm"
 )
@@ -10,11 +11,13 @@ type Patientses struct {
 	gorm.Model
 	ID int `gorm:"primary_key"`
 	AdminID int
-	DoctorID int `gorm:"primary_key"`
+	DoctorID int 
 	PatientID int
-	PatientScheduleID int `gorm:"primary_key"`
+	PatientScheduleID int 
 	Date string
 	Status string
+	CreatedAt time.Time
+	UpdatedAt time.Time
 }
 func toDomain(pss Patientses) patientses.Domain {
 	return patientses.Domain{
@@ -25,6 +28,8 @@ func toDomain(pss Patientses) patientses.Domain {
 		PatientScheduleID: pss.PatientScheduleID,
 		Date:              pss.Date,
 		Status:            pss.Status,
+		CreatedAt: pss.CreatedAt,
+		UpdatedAt: pss.UpdatedAt,
 	}
 }
 func fromDomain(domain patientses.Domain) Patientses {
@@ -36,6 +41,8 @@ func fromDomain(domain patientses.Domain) Patientses {
 		PatientScheduleID: domain.PatientScheduleID,
 		Date:              domain.Date,
 		Status:            domain.Status,
+		CreatedAt: domain.CreatedAt,
+		UpdatedAt: domain.UpdatedAt,
 	}
 }
 func toDomainUpdate(pss Patientses) patientses.Domain{
@@ -47,6 +54,8 @@ func toDomainUpdate(pss Patientses) patientses.Domain{
 		PatientScheduleID: pss.PatientScheduleID,
 		Date: pss.Date,
 		Status: pss.Status,
+		CreatedAt: pss.CreatedAt,
+		UpdatedAt: pss.UpdatedAt,
 	}
 }
 func toDomainList(data []Patientses) []patientses.Domain {

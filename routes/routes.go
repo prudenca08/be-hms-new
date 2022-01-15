@@ -78,6 +78,7 @@ func (cl *RouteList) RouteRegister(e *echo.Echo) {
 	e.GET("/docses/:id", cl.DocsesRouter.DocsesByID)
 
 	//Patients
+	
 	e.GET("/patsche", cl.PatscheRouter.AllPatsche)
 	e.GET("/patsche/:id", cl.PatscheRouter.PatscheByID)
 
@@ -91,9 +92,11 @@ func (cl *RouteList) RouteRegister(e *echo.Echo) {
 
 	//Patientses
 	e.GET("/patientses",cl.PatientsesRouter.AllPatientses)
+	e.GET("/patientses:id", cl.PatientsesRouter.PatientsesByID)
 
 	//Recipe
 	e.GET("/recipe", cl.RecipeRouter.AllRecipe)
+	e.GET("/recipe:id", cl.RecipeRouter.RecipeByID)
 
 }
 

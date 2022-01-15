@@ -3,15 +3,21 @@ package response
 import (
 	"finalproject/features/patientses"
 	"net/http"
+	"time"
 
 	"github.com/labstack/echo/v4"
 )
 
 type CreatePatientsesResponse struct {
 	ID      int    `json:"id"`
+	DoctorID          int `json:"doctorid"`
+	PatientID         int `json:"patientid"`
+	PatientScheduleID int `json:"patientscheduleid"`
 	Status  string `json:"status"`
 	Date    string `json:"date"`
 	Message string `json:"message"`
+	CreatedAt time.Time `json:"created_at"`
+	UpdatedAt time.Time `json:"updated_at"`
 }
 type BaseResponse struct {
 	Meta struct {
@@ -41,22 +47,37 @@ func NewErrorResponse(c echo.Context, status int, err error) error {
 func FromDomainCreate(domain patientses.Domain) CreatePatientsesResponse{
 	return CreatePatientsesResponse{
 		ID: domain.ID,
+		DoctorID: domain.DoctorID,
+	PatientID: domain.PatientID ,
+	PatientScheduleID: domain.PatientScheduleID,
 		Status: domain.Status,
 		Date: domain.Date,
+		CreatedAt: domain.CreatedAt,
+		UpdatedAt: domain.UpdatedAt,
 		Message: "Create Patient Session Success",
 	}
 }
 type PatientsesResponse struct{
 	ID int `json:"id"`
+	DoctorID          int `json:"doctorid"`
+	PatientID         int `json:"patientid"`
+	PatientScheduleID int `json:"patientscheduleid"`
 	Status string `json:"status"`
 	Date string `json:"date"`
+	CreatedAt time.Time `json:"created_at"`
+	UpdatedAt time.Time `json:"updated_at"`
 
 }
 func FromDomainAllPatientses(domain patientses.Domain) PatientsesResponse{
 	return PatientsesResponse{
 		ID: domain.ID,
+		DoctorID: domain.DoctorID,
+	PatientID: domain.PatientID,
+	PatientScheduleID: domain.PatientScheduleID,
 		Status: domain.Status,
 		Date: domain.Date,
+		CreatedAt: domain.CreatedAt,
+		UpdatedAt: domain.UpdatedAt,
 	}
 }
 
@@ -64,8 +85,13 @@ func FromDomainUpdatePatientses(domain patientses.Domain) CreatePatientsesRespon
 	return CreatePatientsesResponse{
 		Message : "Update Patient Session Success",
 		ID: domain.ID,
+		DoctorID: domain.DoctorID,
+	PatientID: domain.PatientID,
+	PatientScheduleID: domain.PatientScheduleID,
 		Status: domain.Status,
 		Date: domain.Date,
+		CreatedAt: domain.CreatedAt,
+		UpdatedAt: domain.UpdatedAt,
 	}
 }
 func FromPatientsesListDomain(domain []patientses.Domain) []PatientsesResponse{

@@ -1,5 +1,7 @@
 package patientses
 
+import "time"
+
 type Domain struct {
 	ID                int
 	AdminID           int
@@ -9,6 +11,8 @@ type Domain struct {
 	Date              string
 	Status            string
 	Message           string
+	CreatedAt time.Time
+	UpdatedAt time.Time
 }
 
 type Service interface {

@@ -3,24 +3,31 @@ package response
 import (
 	"finalproject/features/recipe"
 	"net/http"
+	"time"
 
 	"github.com/labstack/echo/v4"
 )
 
 type CreateRecipeResponse struct {
 	Message      string `json:"message"`
+	PatientSessionID int `json:"patientsessionID"`
 	ID           int    `json:"id"`
-	Day          string `json:"day"`
-	Time         string `json:"time"`
+	// Day          string `json:"day"`
+	// Time         string `json:"time"`
 	DetailRecipe string `json:"detailrecipe"`
+	CreatedAt time.Time `json:"created_at"`
+	UpdatedAt time.Time `json:"update_at"`
 }
 
 type RecipeResponse struct {
 	Message string `json:"message"`
 	ID int `json:"id"`
-	Day string `json:"day"`
-	Time string `json:"time"`
+	PatientSessionID int `json:"patientsessionid"`
+	// Day string `json:"day"`
+	// Time string `json:"time"`
 	DetailRecipe string `json:"detailrecipe"`
+	CreatedAt time.Time `json:"created_at"`
+	UpdatedAt time.Time `json:"updated_at"`
 }
 
 type BaseResponse struct {
@@ -53,9 +60,12 @@ func FromDomainCreate(domain recipe.Domain) CreateRecipeResponse{
 	return CreateRecipeResponse{
 		Message: "Create Recipe Success",
 		ID: domain.ID,
-		Day: domain.Day,
-		Time: domain.Time,
+		PatientSessionID: domain.PatientSessionID,
+		// Day: domain.Day,
+		// Time: domain.Time,
 		DetailRecipe: domain.DetailRecipe,
+		CreatedAt: domain.CreatedAt,
+		UpdatedAt: domain.UpdatedAt,
 	}
 }
 
@@ -63,18 +73,24 @@ func FromDomainUpdateRecipe(domain recipe.Domain) CreateRecipeResponse{
 	return CreateRecipeResponse{
 		Message :"Create Recipe Success",
 		ID: domain.ID,
-		Day: domain.Day,
-		Time: domain.Time,
+		PatientSessionID: domain.PatientSessionID,
+		// Day: domain.Day,
+		// Time: domain.Time,
 		DetailRecipe: domain.DetailRecipe,
+		CreatedAt: domain.CreatedAt,
+		UpdatedAt: domain.UpdatedAt,
 	}
 }
 
 func FromDomainAllRecipe(domain recipe.Domain) RecipeResponse{
 	return RecipeResponse{
 		ID: domain.ID,
-		Day: domain.Day,
-		Time: domain.Time,
+		PatientSessionID: domain.PatientSessionID,
+		// Day: domain.Day,
+		// Time: domain.Time,
 		DetailRecipe: domain.DetailRecipe,
+		CreatedAt: domain.CreatedAt,
+		UpdatedAt: domain.UpdatedAt,
 	}
 }
 
