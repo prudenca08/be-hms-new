@@ -16,7 +16,7 @@ func NewMysqlPatientsesRepository(conn *gorm.DB) patientses.Repository {
 		Conn: conn,
 	}
 }
-func (rep *MysqlPatientsesRepository) Create(pssID int, domain *patientses.Domain) (patientses.Domain,error){
+func (rep *MysqlPatientsesRepository) Create(pssID int, domain *patientses.Domain) (patientses.Domain, error) {
 	dss := fromDomain(*domain)
 	dss.AdminID = pssID
 	result := rep.Conn.Create(&dss)
@@ -26,20 +26,19 @@ func (rep *MysqlPatientsesRepository) Create(pssID int, domain *patientses.Domai
 	return toDomain(dss), nil
 }
 
+func (rep *MysqlPatientsesRepository) AllPatientses() ([]patientses.Domain, error) {
 
-func (rep *MysqlPatientsesRepository) AllPatientses() ([]patientses.Domain, error){
-	
 	var pss []Patientses
-	
+
 	result := rep.Conn.Find(&pss)
-	
+
 	if result.Error != nil {
 		return []patientses.Domain{}, result.Error
 	}
 	return toDomainList(pss), nil
 }
 
-func (rep *MysqlPatientsesRepository) Update(admID int, pssID int, domain *patientses.Domain)(patientses.Domain, error){
+func (rep *MysqlPatientsesRepository) Update(admID int, pssID int, domain *patientses.Domain) (patientses.Domain, error) {
 	patientsesUpdate := fromDomain(*domain)
 
 	patientsesUpdate.ID = pssID
@@ -48,17 +47,17 @@ func (rep *MysqlPatientsesRepository) Update(admID int, pssID int, domain *patie
 	if result.Error != nil {
 		return patientses.Domain{}, bussiness.ErrNotFound
 	}
-	
+
 	return toDomainUpdate(patientsesUpdate), nil
 }
 
-func (rep *MysqlPatientsesRepository) Delete(pssID int, id int) (string, error){
+func (rep *MysqlPatientsesRepository) Delete(pssID int, id int) (string, error) {
 	rec := Patientses{}
 	find := rep.Conn.Where("id = ?", id).First(&rec)
 	if find.Error != nil {
-		return "", bussiness.ErrUnathorized		
+		return "", bussiness.ErrUnathorized
 	}
-	err := rep.Conn.Delete(&rec, "id = ?", id). Error
+	err := rep.Conn.Delete(&rec, "id = ?", id).Error
 
 	if err != nil {
 		return "", bussiness.ErrNotFound
@@ -66,7 +65,7 @@ func (rep *MysqlPatientsesRepository) Delete(pssID int, id int) (string, error){
 	return "Patient Sesion has been delete", nil
 }
 
-func (rep *MysqlPatientsesRepository) PatientsesByID(id int) (patientses.Domain, error){
+func (rep *MysqlPatientsesRepository) PatientsesByID(id int) (patientses.Domain, error) {
 	var pss Patientses
 	result := rep.Conn.Where("id = ?", id).First(&pss)
 	if result.Error != nil {

@@ -9,13 +9,14 @@ import (
 )
 
 type CreatePatientsesResponse struct {
-	ID      int    `json:"id"`
+	Message   string    `json:"message"`
+	ID                int `json:"id"`
+	AdminID           int `json:"adminid"`
 	DoctorID          int `json:"doctorid"`
 	PatientID         int `json:"patientid"`
 	PatientScheduleID int `json:"patientscheduleid"`
-	Status  string `json:"status"`
-	Date    string `json:"date"`
-	Message string `json:"message"`
+	Date              string `json:"date"`
+	Status            string `json:"status"`
 	CreatedAt time.Time `json:"created_at"`
 	UpdatedAt time.Time `json:"updated_at"`
 }
@@ -46,24 +47,26 @@ func NewErrorResponse(c echo.Context, status int, err error) error {
 
 func FromDomainCreate(domain patientses.Domain) CreatePatientsesResponse{
 	return CreatePatientsesResponse{
+		Message:   "Create Patient Session Success",
 		ID: domain.ID,
+		AdminID: domain.AdminID,
 		DoctorID: domain.DoctorID,
-	PatientID: domain.PatientID ,
-	PatientScheduleID: domain.PatientScheduleID,
-		Status: domain.Status,
+		PatientID: domain.PatientID,
+		PatientScheduleID: domain.PatientScheduleID,
 		Date: domain.Date,
+		Status: domain.Status,
 		CreatedAt: domain.CreatedAt,
 		UpdatedAt: domain.UpdatedAt,
-		Message: "Create Patient Session Success",
 	}
 }
 type PatientsesResponse struct{
 	ID int `json:"id"`
-	DoctorID          int `json:"doctorid"`
-	PatientID         int `json:"patientid"`
+	AdminID int `json:"adminid"`
+	DoctorID int `json:"doctorid"`
+	PatientID int `json:"patientid"`
 	PatientScheduleID int `json:"patientscheduleid"`
-	Status string `json:"status"`
 	Date string `json:"date"`
+	Status string `json:"status"`
 	CreatedAt time.Time `json:"created_at"`
 	UpdatedAt time.Time `json:"updated_at"`
 
@@ -71,11 +74,12 @@ type PatientsesResponse struct{
 func FromDomainAllPatientses(domain patientses.Domain) PatientsesResponse{
 	return PatientsesResponse{
 		ID: domain.ID,
+		AdminID: domain.AdminID,
 		DoctorID: domain.DoctorID,
-	PatientID: domain.PatientID,
-	PatientScheduleID: domain.PatientScheduleID,
-		Status: domain.Status,
+		PatientID: domain.PatientID,
+		PatientScheduleID: domain.PatientScheduleID,
 		Date: domain.Date,
+		Status: domain.Status,
 		CreatedAt: domain.CreatedAt,
 		UpdatedAt: domain.UpdatedAt,
 	}
@@ -85,11 +89,12 @@ func FromDomainUpdatePatientses(domain patientses.Domain) CreatePatientsesRespon
 	return CreatePatientsesResponse{
 		Message : "Update Patient Session Success",
 		ID: domain.ID,
+		AdminID: domain.AdminID,
 		DoctorID: domain.DoctorID,
-	PatientID: domain.PatientID,
-	PatientScheduleID: domain.PatientScheduleID,
-		Status: domain.Status,
+		PatientID: domain.PatientID,
+		PatientScheduleID: domain.PatientScheduleID,
 		Date: domain.Date,
+		Status: domain.Status,
 		CreatedAt: domain.CreatedAt,
 		UpdatedAt: domain.UpdatedAt,
 	}

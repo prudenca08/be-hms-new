@@ -3,15 +3,17 @@ package request
 import "finalproject/features/patientses"
 
 type Patientses struct {
-	DoctorID int `json:"doctorid"`
-	PatientID int `json:"patientid"`
+	AdminID           int `json:"adminid"`
+	DoctorID          int `json:"doctorid"`
+	PatientID         int `json:"patientid"`
 	PatientScheduleID int `json:"patientscheduleid"`
-	Status string `json:"status"`
-	Date    string `json:"date"`
+	Date              string `json:"date"`
+	Status            string `json:"status"`
 }
 
 func (req *Patientses) ToDomain() *patientses.Domain {
 	return &patientses.Domain{
+		AdminID: req.AdminID,
 		DoctorID: req.DoctorID,
 		PatientID: req.PatientID,
 		PatientScheduleID: req.PatientScheduleID,

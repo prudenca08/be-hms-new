@@ -10,9 +10,8 @@ type Domain struct {
 	PatientScheduleID int
 	Date              string
 	Status            string
-	Message           string
-	CreatedAt time.Time
-	UpdatedAt time.Time
+	CreatedAt         time.Time
+	UpdatedAt         time.Time
 }
 
 type Service interface {

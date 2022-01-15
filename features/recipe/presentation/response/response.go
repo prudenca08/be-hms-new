@@ -10,21 +10,17 @@ import (
 
 type CreateRecipeResponse struct {
 	Message      string `json:"message"`
-	PatientSessionID int `json:"patientsessionID"`
+	PatientSessionID int `json:"patientsessionid"`
 	ID           int    `json:"id"`
-	// Day          string `json:"day"`
-	// Time         string `json:"time"`
 	DetailRecipe string `json:"detailrecipe"`
 	CreatedAt time.Time `json:"created_at"`
-	UpdatedAt time.Time `json:"update_at"`
+	UpdatedAt time.Time `json:"updated_at"`
 }
 
 type RecipeResponse struct {
 	Message string `json:"message"`
 	ID int `json:"id"`
 	PatientSessionID int `json:"patientsessionid"`
-	// Day string `json:"day"`
-	// Time string `json:"time"`
 	DetailRecipe string `json:"detailrecipe"`
 	CreatedAt time.Time `json:"created_at"`
 	UpdatedAt time.Time `json:"updated_at"`
@@ -59,10 +55,8 @@ func NewErrorResponse(c echo.Context, status int, err error) error {
 func FromDomainCreate(domain recipe.Domain) CreateRecipeResponse{
 	return CreateRecipeResponse{
 		Message: "Create Recipe Success",
-		ID: domain.ID,
 		PatientSessionID: domain.PatientSessionID,
-		// Day: domain.Day,
-		// Time: domain.Time,
+		ID: domain.ID,
 		DetailRecipe: domain.DetailRecipe,
 		CreatedAt: domain.CreatedAt,
 		UpdatedAt: domain.UpdatedAt,
@@ -73,9 +67,7 @@ func FromDomainUpdateRecipe(domain recipe.Domain) CreateRecipeResponse{
 	return CreateRecipeResponse{
 		Message :"Create Recipe Success",
 		ID: domain.ID,
-		PatientSessionID: domain.PatientSessionID,
-		// Day: domain.Day,
-		// Time: domain.Time,
+		PatientSessionID : domain.PatientSessionID,
 		DetailRecipe: domain.DetailRecipe,
 		CreatedAt: domain.CreatedAt,
 		UpdatedAt: domain.UpdatedAt,
@@ -86,8 +78,6 @@ func FromDomainAllRecipe(domain recipe.Domain) RecipeResponse{
 	return RecipeResponse{
 		ID: domain.ID,
 		PatientSessionID: domain.PatientSessionID,
-		// Day: domain.Day,
-		// Time: domain.Time,
 		DetailRecipe: domain.DetailRecipe,
 		CreatedAt: domain.CreatedAt,
 		UpdatedAt: domain.UpdatedAt,

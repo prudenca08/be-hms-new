@@ -57,7 +57,7 @@ func (cl *RouteList) RouteRegister(e *echo.Echo) {
 	admins.POST("/create-patientses", cl.PatientsesRouter.Create, middleware.JWTWithConfig(cl.JWTMiddleware), RoleValidationAdmin())
 	admins.PUT("/update-patientses/:id", cl.PatientsesRouter.Update, middleware.JWTWithConfig(cl.JWTMiddleware), RoleValidationAdmin())
 	admins.DELETE("/delete-patientses/:id", cl.PatientsesRouter.Delete, middleware.JWTWithConfig(cl.JWTMiddleware), RoleValidationAdmin())
-	// doctor.PUT("/update-patientses/:id", cl.PatientsesRouter.Update, middleware.JWTWithConfig(cl.JWTMiddleware), RoleValidationDoctor())
+
 
 	admins.POST("/create-patient", cl.PatientRouter.Create, middleware.JWTWithConfig(cl.JWTMiddleware), RoleValidationAdmin())
 	admins.PUT("/update-patient/:id", cl.PatientRouter.Update, middleware.JWTWithConfig(cl.JWTMiddleware), RoleValidationAdmin())
