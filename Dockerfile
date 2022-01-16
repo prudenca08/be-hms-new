@@ -1,50 +1,29 @@
-# stage I - khusus build dengan envinroment yang sama
-# FROM golang:1.16-alpine AS builder
-# RUN mkdir /app
-# ADD . /app
-# WORKDIR /app
-# RUN go clean --modcache
-# RUN go build -o main
-# # EXPOSE 8080
-# # CMD ["/app/main"]
+FROM golang:1.17-alpine3.14
 
-# # stage 2
-# FROM alpine:3.14
-# WORKDIR /root/
-# COPY --from=builder /app/config.json .
-# COPY --from=builder /app/main .
-# EXPOSE 8080
-# CMD ["./main"]
+WORKDIR /be-hms-new
 
-# FROM golang:1.17-alpine3.14
-
-# WORKDIR /minpro_arya
-
-# COPY . .
-
-# RUN go mod download
-
-
-# RUN go build -o mainfile
-
-# EXPOSE 8080
-
-# CMD ["./mainfile"]
-#BUILD STAGE
-FROM golang:1.17-alpine AS builder
-WORKDIR /finalproject-be-hms
 COPY . .
-COPY go.mod ./
-COPY go.sum ./
+
 RUN go mod download
 
+
+RUN go build -o cicd
+
+EXPOSE 8080
+
+CMD ["./cicd"]
+
+FROM golang:1.17-alpine AS builder
+WORKDIR /be-hms-new
+COPY . .
+RUN go mod download
 RUN go build -o main main.go
 
-#RUN STAGE
+
 FROM alpine:3.14 
-WORKDIR /finalproject-be-hms
-COPY --from=builder /finalproject-be-hms/config/config.json . 
-COPY --from=builder /finalproject-be-hms/main .
+WORKDIR /be-hms-new
+COPY --from=builder /be-hms-new/config/config.json . 
+COPY --from=builder /be-hms-new/main .
 EXPOSE 8000
 
-CMD ["/finalproject-be-hms/main"]
+CMD ["/be-hms-new/main"]

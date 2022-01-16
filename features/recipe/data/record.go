@@ -1,7 +1,7 @@
 package data
 
 import (
-	doctorrecord "finalproject/features/doctor/data"
+	patsesrecord "finalproject/features/patientses/data"
 	"finalproject/features/recipe"
 	"time"
 
@@ -11,22 +11,22 @@ import (
 type Recipe struct {
 	gorm.Model
 	PatientSessionID int
-	DoctorID int
 	ID int
 	Title string
 	DetailRecipe string
+	Patientses patsesrecord.Patientses `gorm:"foreignKey:ID;references:PatientSessionID"`
 	CreatedAt time.Time
 	UpdatedAt time.Time
-	Doctor doctorrecord.Doctor `gorm:"foreignKey:ID;references:DoctorID"`
+	
 }
 
 func ToDomain(rec Recipe) recipe.Domain{
 	return recipe.Domain{
 		PatientSessionID: rec.PatientSessionID,
 		ID: rec.ID,
-		DoctorID: rec.DoctorID,
 		Title: rec.Title,
 		DetailRecipe: rec.DetailRecipe,
+		Patientses: patsesrecord.ToDomain(rec.Patientses),
 		CreatedAt: rec.CreatedAt,
 		UpdatedAt: rec.UpdatedAt,
 	}
@@ -35,7 +35,6 @@ func ToDomain(rec Recipe) recipe.Domain{
 func fromDomain(domain recipe.Domain) Recipe{
 	return Recipe{
 		PatientSessionID: domain.PatientSessionID,
-		DoctorID: domain.DoctorID,
 		ID: domain.ID,
 		Title: domain.Title,
 		DetailRecipe: domain.DetailRecipe,
@@ -47,7 +46,6 @@ func fromDomain(domain recipe.Domain) Recipe{
 func toDomainUpdate(rec Recipe) recipe.Domain{
 	return recipe.Domain{
 		PatientSessionID: rec.PatientSessionID,
-		DoctorID: rec.DoctorID,
 		ID: rec.ID,
 		Title: rec.Title,
 		DetailRecipe: rec.DetailRecipe,

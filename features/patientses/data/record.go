@@ -2,8 +2,11 @@ package data
 
 import (
 	doctorrecord "finalproject/features/doctor/data"
+	patientrecord "finalproject/features/patient/data"
 	"finalproject/features/patientses"
-	datarecipe "finalproject/features/recipe/data"
+	patscherecord "finalproject/features/patsche/data"
+
+	// datarecipe "finalproject/features/recipe/data"
 	"time"
 
 	"gorm.io/gorm"
@@ -18,8 +21,10 @@ type Patientses struct {
 	PatientScheduleID int 
 	Date              string
 	Status            string
+	Patsche patscherecord.Patsche `gorm:"foreignKey:ID;references:PatientScheduleID"`
 	Doctor doctorrecord.Doctor `gorm:"foreignKey:ID;references:DoctorID"`
-	Recipe datarecipe.Recipe `gorm:"foreignKey:PatientSessionID;references:ID"`
+	Patient patientrecord.Patient `gorm:"foreignKey:ID;references:PatientID"`
+	// Recipe datarecipe.Recipe `gorm:"foreignKey:PatientSessionID;references:ID"`
 	CreatedAt time.Time
 	UpdatedAt time.Time
 }
@@ -32,8 +37,10 @@ func ToDomain(pss Patientses) patientses.Domain {
 		PatientScheduleID: pss.PatientScheduleID,
 		Date:              pss.Date,
 		Status:            pss.Status,
+		Patient: patientrecord.ToDomain(pss.Patient),
 		Doctor: doctorrecord.ToDomain(pss.Doctor),
-		Recipe: datarecipe.ToDomain(pss.Recipe),
+		Patsche: patscherecord.ToDomain(pss.Patsche),
+		// Recipe: datarecipe.ToDomain(pss.Recipe),
 		CreatedAt: pss.CreatedAt,
 		UpdatedAt: pss.UpdatedAt,
 	}

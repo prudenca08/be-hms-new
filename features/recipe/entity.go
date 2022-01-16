@@ -1,13 +1,16 @@
 package recipe
 
-import "time"
+import (
+	patsesentity "finalproject/features/patientses"
+	"time"
+)
 
 type Domain struct {
 	ID               int
-	DoctorID         int
 	PatientSessionID int
 	Title            string
 	DetailRecipe     string
+	Patientses patsesentity.Domain
 	CreatedAt time.Time
 	UpdatedAt time.Time
 }

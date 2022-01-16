@@ -23,7 +23,7 @@ func (rep *MysqlPatientsesRepository) AllPatientses() ([]patientses.Domain, erro
 	
 	var pss []Patientses
 	
-	result := rep.Conn.Preload("Recipe").Preload("Recipe.Doctor").Find(&pss)
+	result := rep.Conn.Preload("Doctor").Preload("Patient").Preload("Patsche").Find(&pss)
 
 	ss, _ := json.MarshalIndent(pss, "", " ")
 	fmt.Println(string(ss))

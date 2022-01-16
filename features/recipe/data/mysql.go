@@ -1,8 +1,10 @@
 package data
 
 import (
+	"encoding/json"
 	"finalproject/features/recipe"
 	"finalproject/features/recipe/bussiness"
+	"fmt"
 
 	"gorm.io/gorm"
 )
@@ -20,7 +22,7 @@ func NewMysqlRecipeRepository(conn *gorm.DB) recipe.Repository{
 func (rep *MysqlRecipeRepository) Create(recID int, domain *recipe.Domain) (recipe.Domain,error){
 	rec := fromDomain(*domain)
 
-	rec.DoctorID = recID
+	rec.ID = recID
 	result := rep.Conn.Create(&rec)
 	if result.Error != nil {
 		return recipe.Domain{}, result.Error
@@ -55,7 +57,12 @@ func (rep *MysqlRecipeRepository) Delete(recID int, id int)(string , error){
 
 func (rep *MysqlRecipeRepository) AllRecipe() ([]recipe.Domain, error){
 	var doc []Recipe
-	result := rep.Conn.Find(&doc)
+	
+	result := rep.Conn.Preload("Patientses").Find(&doc)
+
+	ss, _ := json.MarshalIndent(doc, "", " ")
+	fmt.Println(string(ss))
+
 	if result.Error != nil {
 		return []recipe.Domain{}, result.Error
 	}

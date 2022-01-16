@@ -2,8 +2,11 @@ package response
 
 import (
 	doctorresponse "finalproject/features/doctor/presentation/response"
+	patientresponse "finalproject/features/patient/presentation/response"
 	"finalproject/features/patientses"
-	reciperesponse "finalproject/features/recipe/presentation/response"
+	patscheresponse "finalproject/features/patsche/presentation/response"
+
+	// reciperesponse "finalproject/features/recipe/presentation/response"
 	"net/http"
 	"time"
 
@@ -69,7 +72,9 @@ type PatientsesResponse struct{
 	PatientScheduleID int `json:"patientscheduleid"`
 	Status string `json:"status"`
 	Date string `json:"date"`
-	Recipe reciperesponse.RecipeResponse `json:"recipe"`
+	// Recipe reciperesponse.RecipeResponse `json:"recipe"`
+	Patsche patscheresponse.PatscheResponse `json:"patsche"`
+	Patient patientresponse.PatientResponse `json:"patient"`
 	Doctor doctorresponse.DoctorResponse `json:"doctor"`
 	CreatedAt time.Time `json:"created_at"`
 	UpdatedAt time.Time `json:"updated_at"`
@@ -84,8 +89,10 @@ func FromDomainAllPatientses(domain patientses.Domain) PatientsesResponse{
 		PatientScheduleID: domain.PatientScheduleID,
 		Status: domain.Status,
 		Date: domain.Date,
-		Recipe: reciperesponse.FromDomainAllRecipe(domain.Recipe),
+		// Recipe: reciperesponse.FromDomainAllRecipe(domain.Recipe),
+		Patsche: patscheresponse.FromDomainAllPatsche(domain.Patsche),
 		Doctor: doctorresponse.FromDomainAllDoctor(domain.Doctor),
+		Patient: patientresponse.FromDomainAllPatient(domain.Patient),
 		CreatedAt: domain.CreatedAt,
 		UpdatedAt: domain.UpdatedAt,
 	}
