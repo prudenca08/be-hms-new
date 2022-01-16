@@ -1,13 +1,19 @@
 package patsche
 
-import "time"
+import (
+	doctorentity "finalproject/features/doctor"
+	patientsesentity "finalproject/features/patientses"
+	"time"
+)
 
 type Domain struct {
 	ID      int
 	AdminID int
+	DoctorID int
 	Day     string
 	Time    string
-
+	PatientSession patientsesentity.Domain
+	Doctor doctorentity.Domain
 	CreatedAt time.Time
 	UpdatedAt time.Time
 }

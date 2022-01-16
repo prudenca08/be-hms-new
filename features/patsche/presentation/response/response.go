@@ -1,6 +1,8 @@
 package response
 
 import (
+	doctorresponse "finalproject/features/doctor/presentation/response"
+	patientresponse "finalproject/features/patientses/presentation/response"
 	"finalproject/features/patsche"
 	"time"
 
@@ -11,6 +13,8 @@ import (
 
 type CreatePatscheResponse struct {
 	Message   string    `json:"message"`
+	AdminID int `json:"adminid"`
+	DoctorID int `json:"doctorid"`
 	ID        int       `json:"id:"`
 	Day       string    `json:"day"`
 	Time      string    `json:"time"`
@@ -48,6 +52,8 @@ func NewErrorResponse(c echo.Context, status int, err error) error {
 func FromDomainCreate(domain patsche.Domain) CreatePatscheResponse {
 	return CreatePatscheResponse{
 		Message:   "Create  Patient Schedule Success",
+		AdminID: domain.AdminID,
+		DoctorID: domain.DoctorID,
 		ID:        domain.ID,
 		Day:       domain.Day,
 		Time:      domain.Time,
@@ -58,26 +64,36 @@ func FromDomainCreate(domain patsche.Domain) CreatePatscheResponse {
 
 type PatscheResponse struct {
 	Message   string    `json:"message"`
+	AdminID int `json:"adminid"`
+	DoctorID int `json:"doctorid"`
 	ID        int       `json:"id:"`
 	Day       string    `json:"day"`
 	Time      string    `json:"time"`
+	PatientSession patientresponse.PatientsesResponse `json:"patientsession"`
+	Doctor doctorresponse.DoctorResponse `json:"doctor"`
 	CreatedAt time.Time `json:"created_at"`
 	UpdatedAt time.Time `json:"updated_at"`
 }
 
 func FromDomainAllPatsche(domain patsche.Domain) PatscheResponse {
 	return PatscheResponse{
+		AdminID: domain.AdminID,
+		DoctorID: domain.DoctorID,
 		ID:        domain.ID,
 		Day:       domain.Day,
 		Time:      domain.Time,
 		CreatedAt: domain.CreatedAt,
 		UpdatedAt: domain.UpdatedAt,
+		Doctor: doctorresponse.FromDomainAllDoctor(domain.Doctor),
+		PatientSession: patientresponse.FromDomainAllPatientses(domain.PatientSession),
 	}
 }
 
 func FromDomainUpdatePatsche(domain patsche.Domain) CreatePatscheResponse {
 	return CreatePatscheResponse{
 		Message:   "Update  Patient Schedule Success",
+		AdminID: domain.AdminID,
+		DoctorID: domain.DoctorID,
 		ID:        domain.ID,
 		Day:       domain.Day,
 		Time:      domain.Time,

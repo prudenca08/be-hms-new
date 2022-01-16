@@ -1,7 +1,9 @@
 package response
 
 import (
+	doctorresponse "finalproject/features/doctor/presentation/response"
 	"finalproject/features/patientses"
+	reciperesponse "finalproject/features/recipe/presentation/response"
 	"net/http"
 	"time"
 
@@ -9,13 +11,14 @@ import (
 )
 
 type CreatePatientsesResponse struct {
-	ID      int    `json:"id"`
+	Message string `json:"message"`
+	ID                int    `json:"id"`
+	AdminID           int `json:"adminid"`
 	DoctorID          int `json:"doctorid"`
 	PatientID         int `json:"patientid"`
 	PatientScheduleID int `json:"patientscheduleid"`
 	Status  string `json:"status"`
 	Date    string `json:"date"`
-	Message string `json:"message"`
 	CreatedAt time.Time `json:"created_at"`
 	UpdatedAt time.Time `json:"updated_at"`
 }
@@ -46,36 +49,43 @@ func NewErrorResponse(c echo.Context, status int, err error) error {
 
 func FromDomainCreate(domain patientses.Domain) CreatePatientsesResponse{
 	return CreatePatientsesResponse{
+		Message: "Create Patient Session Success",
 		ID: domain.ID,
+		AdminID: domain.AdminID,
 		DoctorID: domain.DoctorID,
-	PatientID: domain.PatientID ,
-	PatientScheduleID: domain.PatientScheduleID,
+		PatientID: domain.PatientID ,
+		PatientScheduleID: domain.PatientScheduleID,
 		Status: domain.Status,
 		Date: domain.Date,
 		CreatedAt: domain.CreatedAt,
 		UpdatedAt: domain.UpdatedAt,
-		Message: "Create Patient Session Success",
 	}
 }
 type PatientsesResponse struct{
-	ID int `json:"id"`
+	ID                int `json:"id"`
+	AdminID			  int `json:"adminid"`
 	DoctorID          int `json:"doctorid"`
 	PatientID         int `json:"patientid"`
 	PatientScheduleID int `json:"patientscheduleid"`
 	Status string `json:"status"`
 	Date string `json:"date"`
+	Recipe reciperesponse.RecipeResponse `json:"recipe"`
+	Doctor doctorresponse.DoctorResponse `json:"doctor"`
 	CreatedAt time.Time `json:"created_at"`
 	UpdatedAt time.Time `json:"updated_at"`
-
 }
+
 func FromDomainAllPatientses(domain patientses.Domain) PatientsesResponse{
 	return PatientsesResponse{
 		ID: domain.ID,
+		AdminID: domain.AdminID,
 		DoctorID: domain.DoctorID,
-	PatientID: domain.PatientID,
-	PatientScheduleID: domain.PatientScheduleID,
+		PatientID: domain.PatientID,
+		PatientScheduleID: domain.PatientScheduleID,
 		Status: domain.Status,
 		Date: domain.Date,
+		Recipe: reciperesponse.FromDomainAllRecipe(domain.Recipe),
+		Doctor: doctorresponse.FromDomainAllDoctor(domain.Doctor),
 		CreatedAt: domain.CreatedAt,
 		UpdatedAt: domain.UpdatedAt,
 	}
@@ -85,9 +95,10 @@ func FromDomainUpdatePatientses(domain patientses.Domain) CreatePatientsesRespon
 	return CreatePatientsesResponse{
 		Message : "Update Patient Session Success",
 		ID: domain.ID,
+		AdminID: domain.AdminID,
 		DoctorID: domain.DoctorID,
-	PatientID: domain.PatientID,
-	PatientScheduleID: domain.PatientScheduleID,
+		PatientID: domain.PatientID,
+		PatientScheduleID: domain.PatientScheduleID,
 		Status: domain.Status,
 		Date: domain.Date,
 		CreatedAt: domain.CreatedAt,

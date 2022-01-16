@@ -1,7 +1,9 @@
 package data
 
 import (
+	"encoding/json"
 	"finalproject/features/patsche"
+	"fmt"
 
 	"finalproject/features/patsche/bussiness"
 
@@ -38,7 +40,10 @@ func (rep *MysqlPatscheRepository) AllPatsche() ([]patsche.Domain, error) {
 
 	var ds []Patsche
 
-	result := rep.Conn.Find(&ds)
+	result := rep.Conn.Preload("PatientSession").Preload("PatientSession.Doctor").Find(&ds)
+
+	ss, _ := json.MarshalIndent(ds, "", " ")
+	fmt.Println(string(ss))
 
 	if result.Error != nil {
 		return []patsche.Domain{}, result.Error

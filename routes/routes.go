@@ -57,7 +57,6 @@ func (cl *RouteList) RouteRegister(e *echo.Echo) {
 	admins.POST("/create-patientses", cl.PatientsesRouter.Create, middleware.JWTWithConfig(cl.JWTMiddleware), RoleValidationAdmin())
 	admins.PUT("/update-patientses/:id", cl.PatientsesRouter.Update, middleware.JWTWithConfig(cl.JWTMiddleware), RoleValidationAdmin())
 	admins.DELETE("/delete-patientses/:id", cl.PatientsesRouter.Delete, middleware.JWTWithConfig(cl.JWTMiddleware), RoleValidationAdmin())
-	// doctor.PUT("/update-patientses/:id", cl.PatientsesRouter.Update, middleware.JWTWithConfig(cl.JWTMiddleware), RoleValidationDoctor())
 
 	admins.POST("/create-patient", cl.PatientRouter.Create, middleware.JWTWithConfig(cl.JWTMiddleware), RoleValidationAdmin())
 	admins.PUT("/update-patient/:id", cl.PatientRouter.Update, middleware.JWTWithConfig(cl.JWTMiddleware), RoleValidationAdmin())
@@ -73,11 +72,16 @@ func (cl *RouteList) RouteRegister(e *echo.Echo) {
 	doctor.PUT("/update-recipe" , cl.RecipeRouter.Update, middleware.JWTWithConfig(cl.JWTMiddleware), RoleValidationDoctor())
 	doctor.DELETE("/delete-recipe/:id", cl.RecipeRouter.Delete, middleware.JWTWithConfig(cl.JWTMiddleware), RoleValidationDoctor())
 
+	//Patient
+	e.GET("/patient", cl.PatientRouter.AllPatient)
+	e.GET("/patient/:id", cl.PatientRouter.PatientByID)
+
+
 	//Docses
 	e.GET("/docses", cl.DocsesRouter.AllDocses)
 	e.GET("/docses/:id", cl.DocsesRouter.DocsesByID)
 
-	//Patients
+	//Patientsche
 	
 	e.GET("/patsche", cl.PatscheRouter.AllPatsche)
 	e.GET("/patsche/:id", cl.PatscheRouter.PatscheByID)

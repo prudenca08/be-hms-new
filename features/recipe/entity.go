@@ -6,8 +6,6 @@ type Domain struct {
 	ID               int
 	DoctorID         int
 	PatientSessionID int
-	// Day              string
-	// Time             string
 	Title            string
 	DetailRecipe     string
 	CreatedAt time.Time

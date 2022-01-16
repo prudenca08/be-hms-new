@@ -1,6 +1,10 @@
 package patientses
 
-import "time"
+import (
+	doctorentity "finalproject/features/doctor"
+	recipeentity "finalproject/features/recipe"
+	"time"
+)
 
 type Domain struct {
 	ID                int
@@ -10,7 +14,8 @@ type Domain struct {
 	PatientScheduleID int
 	Date              string
 	Status            string
-	Message           string
+	Doctor doctorentity.Domain
+	Recipe recipeentity.Domain
 	CreatedAt time.Time
 	UpdatedAt time.Time
 }

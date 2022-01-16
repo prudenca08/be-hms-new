@@ -4,6 +4,9 @@ import (
 	"finalproject/features/patsche"
 	"time"
 
+	doctorrecord "finalproject/features/doctor/data"
+	datapatientses "finalproject/features/patientses/data"
+
 	"gorm.io/gorm"
 )
 
@@ -11,19 +14,25 @@ type Patsche struct {
 	gorm.Model
 	ID        int `gorm:"primary_key"`
 	AdminID   int
+	DoctorID int
 	Day       string
 	Time      string
 	CreatedAt time.Time
 	UpdatedAt time.Time
+	Doctor doctorrecord.Doctor `gorm:"foreignKey:ID;references:DoctorID"`
+	PatientSession datapatientses.Patientses `gorm:"foreignKey:PatientScheduleID;references:ID"`
 	
 }
 
 func toDomain(ds Patsche) patsche.Domain {
 	return patsche.Domain{
 		ID:        ds.ID,
+		DoctorID:  ds.DoctorID,
 		AdminID:   ds.AdminID,
 		Day:       ds.Day,
 		Time:      ds.Time,
+		PatientSession: datapatientses.ToDomain(ds.PatientSession),
+		Doctor: doctorrecord.ToDomain(ds.Doctor),
 		CreatedAt: ds.CreatedAt,
 		UpdatedAt: ds.UpdatedAt,
 	}
@@ -32,6 +41,7 @@ func toDomain(ds Patsche) patsche.Domain {
 func fromDomain(domain patsche.Domain) Patsche {
 	return Patsche{
 		ID:        domain.ID,
+		DoctorID:  domain.Doctor.ID,
 		AdminID:   domain.AdminID,
 		Day:       domain.Day,
 		Time:      domain.Time,
@@ -43,6 +53,7 @@ func fromDomain(domain patsche.Domain) Patsche {
 func toDomainUpdate(ds Patsche) patsche.Domain {
 	return patsche.Domain{
 		ID:        ds.ID,
+		DoctorID:  ds.DoctorID,
 		AdminID:   ds.AdminID,
 		Day:       ds.Day,
 		Time:      ds.Time,

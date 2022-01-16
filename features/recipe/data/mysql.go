@@ -25,7 +25,7 @@ func (rep *MysqlRecipeRepository) Create(recID int, domain *recipe.Domain) (reci
 	if result.Error != nil {
 		return recipe.Domain{}, result.Error
 	}
-	return toDomain(rec), nil
+	return ToDomain(rec), nil
 }
 
 func (rep *MysqlRecipeRepository) Update(docID int, recID int, domain *recipe.Domain)(recipe.Domain, error){
@@ -67,5 +67,5 @@ func (rep *MysqlRecipeRepository) RecipeByID(id int) (recipe.Domain, error){
 	if result.Error !=nil {
 		return recipe.Domain{}, result.Error
 	}
-	return toDomain(doc),nil
+	return ToDomain(doc),nil
 }

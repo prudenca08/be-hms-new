@@ -1,7 +1,9 @@
 package data
 
 import (
+	doctorrecord "finalproject/features/doctor/data"
 	"finalproject/features/patientses"
+	datarecipe "finalproject/features/recipe/data"
 	"time"
 
 	"gorm.io/gorm"
@@ -9,17 +11,19 @@ import (
 
 type Patientses struct {
 	gorm.Model
-	ID int `gorm:"primary_key"`
-	AdminID int
-	DoctorID int 
-	PatientID int
+	ID                int `gorm:"primary_key"`
+	AdminID           int
+	DoctorID          int 
+	PatientID         int
 	PatientScheduleID int 
-	Date string
-	Status string
+	Date              string
+	Status            string
+	Doctor doctorrecord.Doctor `gorm:"foreignKey:ID;references:DoctorID"`
+	Recipe datarecipe.Recipe `gorm:"foreignKey:PatientSessionID;references:ID"`
 	CreatedAt time.Time
 	UpdatedAt time.Time
 }
-func toDomain(pss Patientses) patientses.Domain {
+func ToDomain(pss Patientses) patientses.Domain {
 	return patientses.Domain{
 		ID:                pss.ID,
 		AdminID:           pss.AdminID,
@@ -28,6 +32,8 @@ func toDomain(pss Patientses) patientses.Domain {
 		PatientScheduleID: pss.PatientScheduleID,
 		Date:              pss.Date,
 		Status:            pss.Status,
+		Doctor: doctorrecord.ToDomain(pss.Doctor),
+		Recipe: datarecipe.ToDomain(pss.Recipe),
 		CreatedAt: pss.CreatedAt,
 		UpdatedAt: pss.UpdatedAt,
 	}
@@ -61,7 +67,7 @@ func toDomainUpdate(pss Patientses) patientses.Domain{
 func toDomainList(data []Patientses) []patientses.Domain {
 	result := []patientses.Domain{}
 	for _, pss := range data{
-		result = append(result, toDomain(pss))
+		result = append(result, ToDomain(pss))
 	}
 	return result
 }

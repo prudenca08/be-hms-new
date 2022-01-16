@@ -21,6 +21,18 @@ func NewHandlerPatient(serv patient.Service) *PatientHandler {
 	}
 }
 
+func (ctrl *PatientHandler) AllPatient(c echo.Context) error {
+
+	result, err := ctrl.patientService.AllPatient()
+
+	if err != nil {
+		return response.NewErrorResponse(c, http.StatusBadRequest, err)
+	}
+
+	return response.NewSuccessResponse(c, response.FromPatientListDomain(result))
+
+}
+
 func (ctrl *PatientHandler) Create(c echo.Context) error {
 
 	createReq := request.Patient{}
@@ -41,17 +53,6 @@ func (ctrl *PatientHandler) Create(c echo.Context) error {
 
 }
 
-func (ctrl *PatientHandler) AllPatient(c echo.Context) error {
-
-	result, err := ctrl.patientService.AllPatient()
-
-	if err != nil {
-		return response.NewErrorResponse(c, http.StatusBadRequest, err)
-	}
-
-	return response.NewSuccessResponse(c, response.FromPatientListDomain(result))
-
-}
 
 func (ctrl *PatientHandler) Update(c echo.Context) error {
 
